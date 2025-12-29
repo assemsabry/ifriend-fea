@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">iFriend</string>
+    <string name="facebook_app_id">1358740542614863</string>
+    <string name="facebook_client_token">801a49d393d82389251c49fe92637f8f</string>
+    <string name="fb_login_protocol_scheme">fb1358740542614863</string>
+</resources>
