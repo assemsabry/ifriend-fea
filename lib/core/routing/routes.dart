@@ -7,7 +7,8 @@ class Routes {
   static const String enablePermissionsScreen = '/enable-permissions';
   static const String homeScreen = '/home';
   static const String privacyPolicyScreen = '/privacyPolicyScreen';
-  static const String stepsToLinkWithChildDeviceScreen = '/stepsToLinkWithChildDeviceScreen';
+  static const String stepsToLinkWithChildDeviceScreen =
+      '/stepsToLinkWithChildDeviceScreen';
   static const String deviceLinkingScanQrScreen = '/DeviceLinkingScanQrScreen';
   static const String homeLayout = '/HomeLayout';
   static const String setUpChildProfileScreen = '/SetUpChildProfileScreen';

@@ -2,14 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:ifriend_app/core/helpers/auth_local_datasource.dart';
 import 'package:ifriend_app/core/networking/api_constants.dart';
 import 'package:ifriend_app/core/networking/models/refresh_token_request.dart';
-import 'package:ifriend_app/features/login/data/models/login_response.dart';
+import 'package:ifriend_app/features/old/login/data/models/login_response.dart';
 import 'package:ifriend_app/core/services/navigation_service.dart';
 import 'dart:async';
 import 'dart:convert';
 
 class AuthInterceptor extends Interceptor {
   final AuthLocalDataSource _authLocalDataSource;
-  final Dio _dio; // Main Dio instance might be needed or we create a temp one for refresh
+  final Dio
+  _dio; // Main Dio instance might be needed or we create a temp one for refresh
 
   // Shared future so concurrent 401 requests wait on the same refresh
   Future<LoginResponse>? _refreshingFuture;
@@ -18,13 +19,17 @@ class AuthInterceptor extends Interceptor {
 
   @override
   Future<void> onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     var token = _authLocalDataSource.getAccessToken();
 
     // Debug log to help diagnose missing Authorization header and token state
     try {
       if (token != null && token.isNotEmpty) {
-        final masked = token.length > 10 ? '${token.substring(0, 6)}...${token.substring(token.length - 4)}' : token;
+        final masked = token.length > 10
+            ? '${token.substring(0, 6)}...${token.substring(token.length - 4)}'
+            : token;
         print('AuthInterceptor: attaching access token (masked): $masked');
       } else {
         print('AuthInterceptor: no access token found in AuthLocalDataSource');
@@ -33,7 +38,9 @@ class AuthInterceptor extends Interceptor {
 
     // If we have a token, proactively check its expiry. If expired, try to refresh before sending the request.
     if (token != null && token.isNotEmpty && _isTokenExpired(token)) {
-      print('AuthInterceptor: access token appears expired, attempting refresh before request');
+      print(
+        'AuthInterceptor: access token appears expired, attempting refresh before request',
+      );
 
       final refreshToken = _authLocalDataSource.getRefreshToken();
       if (refreshToken == null) {
@@ -67,14 +74,21 @@ class AuthInterceptor extends Interceptor {
           );
         } catch (_) {
           // Fallback: at least save tokens
-          await _authLocalDataSource.saveTokens(accessToken: newTokens.accessToken, refreshToken: newTokens.refreshToken);
+          await _authLocalDataSource.saveTokens(
+            accessToken: newTokens.accessToken,
+            refreshToken: newTokens.refreshToken,
+          );
         }
 
         token = newTokens.accessToken;
 
         try {
-          final masked = token.length > 10 ? '${token.substring(0, 6)}...${token.substring(token.length - 4)}' : token;
-          print('AuthInterceptor: refresh successful, new access token (masked): $masked');
+          final masked = token.length > 10
+              ? '${token.substring(0, 6)}...${token.substring(token.length - 4)}'
+              : token;
+          print(
+            'AuthInterceptor: refresh successful, new access token (masked): $masked',
+          );
         } catch (_) {}
       } catch (e) {
         // Refresh failed -> logout and stop the request
@@ -111,7 +125,8 @@ class AuthInterceptor extends Interceptor {
           break;
       }
       final decoded = utf8.decode(base64Url.decode(payload));
-      final Map<String, dynamic> map = json.decode(decoded) as Map<String, dynamic>;
+      final Map<String, dynamic> map =
+          json.decode(decoded) as Map<String, dynamic>;
       final expRaw = map['exp'];
       int? exp;
       if (expRaw is int) exp = expRaw;
@@ -194,7 +209,10 @@ class AuthInterceptor extends Interceptor {
           );
         } catch (_) {
           // Fallback: at least save tokens
-          await _authLocalDataSource.saveTokens(accessToken: newTokens.accessToken, refreshToken: newTokens.refreshToken);
+          await _authLocalDataSource.saveTokens(
+            accessToken: newTokens.accessToken,
+            refreshToken: newTokens.refreshToken,
+          );
         }
 
         // Retry the failed request with new token
@@ -223,8 +241,12 @@ class AuthInterceptor extends Interceptor {
 
         // Debug: show what we'll send with retry
         try {
-          final masked = newTokens.accessToken.length > 10 ? '${newTokens.accessToken.substring(0, 6)}...${newTokens.accessToken.substring(newTokens.accessToken.length - 4)}' : newTokens.accessToken;
-          print('AuthInterceptor: retrying request ${opts.path} with Authorization: Bearer $masked');
+          final masked = newTokens.accessToken.length > 10
+              ? '${newTokens.accessToken.substring(0, 6)}...${newTokens.accessToken.substring(newTokens.accessToken.length - 4)}'
+              : newTokens.accessToken;
+          print(
+            'AuthInterceptor: retrying request ${opts.path} with Authorization: Bearer $masked',
+          );
           print('AuthInterceptor: retry headers: ${requestOptions.headers}');
         } catch (_) {}
 
@@ -249,7 +271,10 @@ class AuthInterceptor extends Interceptor {
     handler.next(err);
   }
 
-  Future<void> _handleRefreshFailure(DioException err, ErrorInterceptorHandler handler) async {
+  Future<void> _handleRefreshFailure(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
     try {
       await _authLocalDataSource.clear();
     } catch (_) {}
@@ -259,13 +284,18 @@ class AuthInterceptor extends Interceptor {
   }
 
   // Separate handler for request-time failures where we only have a RequestInterceptorHandler
-  Future<void> _handleRefreshFailureOnRequest(RequestOptions reqOptions, RequestInterceptorHandler handler) async {
+  Future<void> _handleRefreshFailureOnRequest(
+    RequestOptions reqOptions,
+    RequestInterceptorHandler handler,
+  ) async {
     // If refresh fails before sending the request, DO NOT cancel or remove the
     // Authorization header. Keep the existing header (even if expired) so the
     // server can respond with a 401 and an error code (e.g., TOKEN_EXPIRED)
     // which allows the onError handler to perform the refresh/ retry flow.
     try {
-      print('AuthInterceptor: refresh failed during onRequest — keeping existing Authorization header and proceeding');
+      print(
+        'AuthInterceptor: refresh failed during onRequest — keeping existing Authorization header and proceeding',
+      );
     } catch (_) {}
 
     // Ensure we attach the existing access token (if any) to the outgoing
@@ -279,8 +309,12 @@ class AuthInterceptor extends Interceptor {
         headers['Authorization'] = 'Bearer $existingToken';
         reqOptions.headers = headers;
         try {
-          final masked = existingToken.length > 10 ? '${existingToken.substring(0, 6)}...${existingToken.substring(existingToken.length - 4)}' : existingToken;
-          print('AuthInterceptor: attached existing access token (masked) after failed refresh: $masked');
+          final masked = existingToken.length > 10
+              ? '${existingToken.substring(0, 6)}...${existingToken.substring(existingToken.length - 4)}'
+              : existingToken;
+          print(
+            'AuthInterceptor: attached existing access token (masked) after failed refresh: $masked',
+          );
         } catch (_) {}
       }
     } catch (_) {}
@@ -320,10 +354,13 @@ class AuthInterceptor extends Interceptor {
       }
 
       // The LoginResponse.fromJson accepts either {data: {...}} or {...}
-      final inner = responseData['data'] as Map<String, dynamic>? ?? responseData;
+      final inner =
+          responseData['data'] as Map<String, dynamic>? ?? responseData;
 
       // If server returned full login payload, parse normally
-      if (inner['accessToken'] != null && inner['refreshToken'] != null && inner['user'] != null) {
+      if (inner['accessToken'] != null &&
+          inner['refreshToken'] != null &&
+          inner['user'] != null) {
         return LoginResponse.fromJson(response.data);
       }
 
@@ -341,7 +378,11 @@ class AuthInterceptor extends Interceptor {
           // than trying to decode the JWT in some environments.
           final uid = _authLocalDataSource.getUserId();
           final uemail = _authLocalDataSource.getUserEmail();
-          if (uid != null && uid.isNotEmpty && uemail != null && uemail.isNotEmpty && existingRefresh != null) {
+          if (uid != null &&
+              uid.isNotEmpty &&
+              uemail != null &&
+              uemail.isNotEmpty &&
+              existingRefresh != null) {
             final userDataFromPrefs = UserData(
               id: uid,
               email: uemail,
@@ -369,7 +410,8 @@ class AuthInterceptor extends Interceptor {
             try {
               // Try decode id/email from token
               final payload = _decodeJwtPayload(newAccessToken);
-              final idFromToken = (payload['userId'] ?? payload['id'])?.toString() ?? '';
+              final idFromToken =
+                  (payload['userId'] ?? payload['id'])?.toString() ?? '';
               final emailFromToken = (payload['email'] ?? '')?.toString() ?? '';
               final fallbackUser = UserData(
                 id: idFromToken,
@@ -380,7 +422,9 @@ class AuthInterceptor extends Interceptor {
                 role: null,
                 profileCompleted: null,
               );
-              print('AuthInterceptor: refresh returned accessToken only, using fallback user from token/prefs');
+              print(
+                'AuthInterceptor: refresh returned accessToken only, using fallback user from token/prefs',
+              );
               return LoginResponse(
                 accessToken: newAccessToken,
                 refreshToken: existingRefresh,
@@ -397,7 +441,9 @@ class AuthInterceptor extends Interceptor {
                 role: null,
                 profileCompleted: null,
               );
-              print('AuthInterceptor: refresh returned accessToken only, using empty fallback user');
+              print(
+                'AuthInterceptor: refresh returned accessToken only, using empty fallback user',
+              );
               return LoginResponse(
                 accessToken: newAccessToken,
                 refreshToken: existingRefresh,
@@ -433,7 +479,9 @@ class AuthInterceptor extends Interceptor {
         // If it's a DioException we can log more details
         if (e is DioException) {
           try {
-            print('AuthInterceptor: refresh token request failed: status=${e.response?.statusCode} data=${e.response?.data}');
+            print(
+              'AuthInterceptor: refresh token request failed: status=${e.response?.statusCode} data=${e.response?.data}',
+            );
           } catch (_) {}
         } else {
           print('AuthInterceptor: refresh token request failed: $e');
@@ -464,7 +512,8 @@ class AuthInterceptor extends Interceptor {
           break;
       }
       final decoded = utf8.decode(base64Url.decode(payload));
-      final Map<String, dynamic> map = json.decode(decoded) as Map<String, dynamic>;
+      final Map<String, dynamic> map =
+          json.decode(decoded) as Map<String, dynamic>;
       return map;
     } catch (_) {
       return {};

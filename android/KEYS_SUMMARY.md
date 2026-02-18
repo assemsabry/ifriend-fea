@@ -80,7 +80,7 @@ A7:4C:32:9B:3F:30:85:73:B0:2F:6F:03:58:34:A1:9B:85:50:56:FC
 51:99:E8:E3:7B:53:B1:66:5A:93:C9:B1:24:3D:29:17:A8:D9:A6:29
 ```
 
-**Package Name:** `com.example.ifriend_app`
+**Package Name:** `com.ifriend.app`
 
 ---
 

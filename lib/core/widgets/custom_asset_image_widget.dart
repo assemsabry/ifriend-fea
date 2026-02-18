@@ -8,16 +8,37 @@ class CustomAssetImageWidget extends StatelessWidget {
   final BoxFit fit;
   final BlendMode? colorBlendMode;
   final Color? color;
-  const CustomAssetImageWidget(this.image, {super.key, this.height, this.width, this.fit = BoxFit.cover, this.color, this.colorBlendMode});
+  const CustomAssetImageWidget(
+    this.image, {
+    super.key,
+    this.height,
+    this.width,
+    this.fit = BoxFit.cover,
+    this.color,
+    this.colorBlendMode,
+  });
 
   @override
   Widget build(BuildContext context) {
     final isSvg = image.contains('.svg', image.length - '.svg'.length);
 
-    return isSvg ? SvgPicture.asset(
-      image, width: width, height: height,
-      colorFilter: color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
-      fit: fit,
-    ) : Image.asset(image, fit: fit, width: width, height: height, color: color, colorBlendMode: colorBlendMode);
+    return isSvg
+        ? SvgPicture.asset(
+            image,
+            width: width,
+            height: height,
+            colorFilter: color != null
+                ? ColorFilter.mode(color!, BlendMode.srcIn)
+                : null,
+            fit: fit,
+          )
+        : Image.asset(
+            image,
+            fit: fit,
+            width: width,
+            height: height,
+            color: color,
+            colorBlendMode: colorBlendMode,
+          );
   }
 }

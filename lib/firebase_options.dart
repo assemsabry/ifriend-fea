@@ -51,11 +51,11 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD19OL1SAMhS8C6RyCPKRgFujaeI4DYTjY',
-    appId: '1:585059466120:android:c2022dfe75de2bd5a9983d',
-    messagingSenderId: '585059466120',
-    projectId: 'ifriend-9dbd7',
-    storageBucket: 'ifriend-9dbd7.firebasestorage.app',
+    apiKey: 'AIzaSyAANCHxauiYji4yn_zjEyrdeXQvtU7GNUw',
+    appId: '1:84517540194:android:9cd1664f81344454abdc3b',
+    messagingSenderId: '84517540194',
+    projectId: 'ifriend-cda32',
+    storageBucket: 'ifriend-cda32.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -64,7 +64,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '585059466120',
     projectId: 'ifriend-9dbd7',
     storageBucket: 'ifriend-9dbd7.firebasestorage.app',
-    iosClientId: '585059466120-5edhqc4fmkm9bltleff20hnirto3sjid.apps.googleusercontent.com',
+    iosClientId:
+        '585059466120-5edhqc4fmkm9bltleff20hnirto3sjid.apps.googleusercontent.com',
     iosBundleId: 'com.example.ifriendApp',
   );
 
@@ -74,7 +75,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '585059466120',
     projectId: 'ifriend-9dbd7',
     storageBucket: 'ifriend-9dbd7.firebasestorage.app',
-    iosClientId: '585059466120-5edhqc4fmkm9bltleff20hnirto3sjid.apps.googleusercontent.com',
+    iosClientId:
+        '585059466120-5edhqc4fmkm9bltleff20hnirto3sjid.apps.googleusercontent.com',
     iosBundleId: 'com.example.ifriendApp',
   );
 
@@ -87,5 +89,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'ifriend-9dbd7.firebasestorage.app',
     measurementId: 'G-YS4087S16X',
   );
-
 }

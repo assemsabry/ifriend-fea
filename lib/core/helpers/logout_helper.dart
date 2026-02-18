@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ifriend_app/core/di/injection.dart' as di;
 import 'package:ifriend_app/core/helpers/auth_local_datasource.dart';
 import 'package:ifriend_app/core/routing/routes.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 /// Clears local auth data and navigates to the login screen.
@@ -15,7 +14,7 @@ Future<void> logoutAndNavigate(BuildContext context) async {
 
   // Try to sign out from Google and Facebook (ignore errors)
   try {
-    await GoogleSignIn().signOut();
+    //  await GoogleSignIn().signOut();
   } catch (_) {}
 
   try {
@@ -24,7 +23,8 @@ Future<void> logoutAndNavigate(BuildContext context) async {
 
   // Navigate to login and remove all previous routes
   if (context.mounted) {
-    Navigator.of(context).pushNamedAndRemoveUntil(Routes.loginScreen, (r) => false);
+    Navigator.of(
+      context,
+    ).pushNamedAndRemoveUntil(Routes.loginScreen, (r) => false);
   }
 }
-

@@ -1,62 +1,57 @@
 {
   "project_info": {
-    "project_number": "585059466120",
-    "project_id": "ifriend-9dbd7",
-    "storage_bucket": "ifriend-9dbd7.firebasestorage.app"
+    "project_number": "84517540194",
+    "project_id": "ifriend-cda32",
+    "storage_bucket": "ifriend-cda32.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:585059466120:android:c2022dfe75de2bd5a9983d",
+        "mobilesdk_app_id": "1:84517540194:android:9cd1664f81344454abdc3b",
         "android_client_info": {
-          "package_name": "com.example.ifriend_app"
+          "package_name": "com.ifriend.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "585059466120-2951glj4es6272qjlt335mgvlkjena3f.apps.googleusercontent.com",
+          "client_id": "84517540194-49ssj77nsdrq84q0bklc87mlq1nuv3gj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ifriend.app",
+            "certificate_hash": "5199e8e37b53b1665a93c9b1243d2917a8d9a629"
+          }
+        },
+        {
+          "client_id": "84517540194-dfnkulckdr6esop5bdohk3i35ftc84c1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ifriend.app",
+            "certificate_hash": "eb290668e2f3efe172a9b108a1c5cb6439af73a4"
+          }
+        },
+        {
+          "client_id": "84517540194-sv16d368n3e0lu3ejsbctshl6ebjm9eb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ifriend.app",
+            "certificate_hash": "bc014c8c52545a501a6bad30191fbad5e25fbe50"
+          }
+        },
+        {
+          "client_id": "84517540194-gh2qme1c8srbbv2kenci2h6ouq1qc7lj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD19OL1SAMhS8C6RyCPKRgFujaeI4DYTjY"
+          "current_key": "AIzaSyAANCHxauiYji4yn_zjEyrdeXQvtU7GNUw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "585059466120-2951glj4es6272qjlt335mgvlkjena3f.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:585059466120:android:c4b6455c925a83b3a9983d",
-        "android_client_info": {
-          "package_name": "com.ifriend.ifriend"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "585059466120-2951glj4es6272qjlt335mgvlkjena3f.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyD19OL1SAMhS8C6RyCPKRgFujaeI4DYTjY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "585059466120-2951glj4es6272qjlt335mgvlkjena3f.apps.googleusercontent.com",
+              "client_id": "84517540194-gh2qme1c8srbbv2kenci2h6ouq1qc7lj.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

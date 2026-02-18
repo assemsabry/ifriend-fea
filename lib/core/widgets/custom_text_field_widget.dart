@@ -194,8 +194,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.title != null)...[
-          Text(widget.title ?? "", style: TextStyles.font16Grey500Weight.copyWith(color: ColorsManager.neutral700)),
+        if (widget.title != null) ...[
+          Text(
+            widget.title ?? "",
+            style: TextStyles.font16Grey500Weight.copyWith(
+              color: ColorsManager.neutral700,
+            ),
+          ),
           const SizedBox(height: 12.0),
         ],
 

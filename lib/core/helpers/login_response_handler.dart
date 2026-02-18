@@ -1,5 +1,5 @@
 import 'package:ifriend_app/core/helpers/auth_local_datasource.dart';
-import 'package:ifriend_app/features/login/data/models/login_response.dart';
+import 'package:ifriend_app/features/old/login/data/models/login_response.dart';
 
 /// Parses a raw API response (which may be wrapped like {"success": true, "data": {...}})
 /// and saves access/refresh tokens + basic user info using [AuthLocalDataSource].
@@ -18,25 +18,38 @@ Future<LoginResponse?> processAndSaveLoginResponse(
       : rawJson;
 
   // Support both camelCase and snake_case keys.
-  String? accessToken = (data['accessToken'] ?? data['access_token'])?.toString();
-  String? refreshToken = (data['refreshToken'] ?? data['refresh_token'])?.toString();
+  String? accessToken = (data['accessToken'] ?? data['access_token'])
+      ?.toString();
+  String? refreshToken = (data['refreshToken'] ?? data['refresh_token'])
+      ?.toString();
 
-  if (accessToken == null || refreshToken == null || accessToken.isEmpty || refreshToken.isEmpty) {
+  if (accessToken == null ||
+      refreshToken == null ||
+      accessToken.isEmpty ||
+      refreshToken.isEmpty) {
     return null; // required tokens missing
   }
 
-  final userMap = (data['user'] is Map<String, dynamic>) ? (data['user'] as Map<String, dynamic>) : <String, dynamic>{};
+  final userMap = (data['user'] is Map<String, dynamic>)
+      ? (data['user'] as Map<String, dynamic>)
+      : <String, dynamic>{};
 
   // Extract user fields with safe fallbacks and type conversions.
-  final String id = userMap['id']?.toString() ?? userMap['user_id']?.toString() ?? '';
+  final String id =
+      userMap['id']?.toString() ?? userMap['user_id']?.toString() ?? '';
   final String email = userMap['email']?.toString() ?? '';
   // Support new fields: firstName / lastName. Fall back to combined `name` for compatibility.
-  final String firstName = userMap['firstName']?.toString() ?? userMap['first_name']?.toString() ?? '';
-  final String lastName = userMap['lastName']?.toString() ?? userMap['last_name']?.toString() ?? '';
+  final String firstName =
+      userMap['firstName']?.toString() ??
+      userMap['first_name']?.toString() ??
+      '';
+  final String lastName =
+      userMap['lastName']?.toString() ?? userMap['last_name']?.toString() ?? '';
   final String nameFallback = userMap['name']?.toString() ?? '';
   final String role = userMap['role']?.toString() ?? 'PARENT';
 
-  String? profilePicture = userMap['profile_picture'] ?? userMap['profilePicture'];
+  String? profilePicture =
+      userMap['profile_picture'] ?? userMap['profilePicture'];
 
   bool profileCompleted = false;
   if (userMap.containsKey('profileCompleted')) {
@@ -54,8 +67,16 @@ Future<LoginResponse?> processAndSaveLoginResponse(
   final user = UserData(
     id: id,
     email: email,
-    firstName: firstName.isNotEmpty ? firstName : (nameFallback.isNotEmpty ? nameFallback.split(' ').first : ''),
-    lastName: lastName.isNotEmpty ? lastName : (nameFallback.isNotEmpty ? (nameFallback.split(' ').length > 1 ? nameFallback.split(' ').sublist(1).join(' ') : '') : ''),
+    firstName: firstName.isNotEmpty
+        ? firstName
+        : (nameFallback.isNotEmpty ? nameFallback.split(' ').first : ''),
+    lastName: lastName.isNotEmpty
+        ? lastName
+        : (nameFallback.isNotEmpty
+              ? (nameFallback.split(' ').length > 1
+                    ? nameFallback.split(' ').sublist(1).join(' ')
+                    : '')
+              : ''),
     profilePicture: profilePicture,
     role: role,
     profileCompleted: profileCompleted,
@@ -74,8 +95,16 @@ Future<LoginResponse?> processAndSaveLoginResponse(
     refreshToken: refreshToken,
     userId: id,
     email: email,
-    firstName: firstName.isNotEmpty ? firstName : (nameFallback.isNotEmpty ? nameFallback.split(' ').first : ''),
-    lastName: lastName.isNotEmpty ? lastName : (nameFallback.isNotEmpty ? (nameFallback.split(' ').length > 1 ? nameFallback.split(' ').sublist(1).join(' ') : '') : ''),
+    firstName: firstName.isNotEmpty
+        ? firstName
+        : (nameFallback.isNotEmpty ? nameFallback.split(' ').first : ''),
+    lastName: lastName.isNotEmpty
+        ? lastName
+        : (nameFallback.isNotEmpty
+              ? (nameFallback.split(' ').length > 1
+                    ? nameFallback.split(' ').sublist(1).join(' ')
+                    : '')
+              : ''),
     role: role,
     profilePicture: profilePicture,
   );

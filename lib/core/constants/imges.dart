@@ -1,7 +1,8 @@
 class Images {
   static const String logo = 'assets/images/logo.png';
   static const String background = 'assets/images/background.jpg';
-  static const String profilePlaceholder = 'assets/images/profile_placeholder.png';
+  static const String profilePlaceholder =
+      'assets/images/profile_placeholder.png';
   static const String iconHome = 'assets/images/icon_home.png';
   static const String iconSettings = 'assets/images/icon_settings.png';
   static const String cameraIcon = 'assets/icons/camera_icon.png';

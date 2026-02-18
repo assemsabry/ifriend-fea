@@ -1,4 +1,4 @@
-package com.example.ifriend_app
+package com.ifriend.app
 
 import android.app.AppOpsManager
 import android.content.Context
@@ -10,7 +10,7 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
-    private val CHANNEL = "com.example.ifriend_app/permissions"
+    private val CHANNEL = "com.ifriend.app/permissions"
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)

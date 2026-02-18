@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ifriend_app/core/routing/routes.dart';
-import 'package:ifriend_app/features/onboarding/presentation/cubit/onboarding_cubit.dart';
-import 'package:ifriend_app/features/onboarding/presentation/cubit/onboarding_state.dart';
+import 'package:ifriend_app/features/old/onboarding/presentation/cubit/onboarding_cubit.dart';
+import 'package:ifriend_app/features/old/onboarding/presentation/cubit/onboarding_state.dart';
 import 'package:ifriend_app/core/di/injection.dart' as di;
 import 'package:ifriend_app/core/helpers/auth_local_datasource.dart';
 

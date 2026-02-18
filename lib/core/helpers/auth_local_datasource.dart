@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ifriend_app/features/login/domain/entities/login_entity.dart';
+import 'package:ifriend_app/features/old/login/domain/entities/login_entity.dart';
 
 class AuthLocalDataSource {
   final SharedPreferences prefs;
@@ -44,9 +44,15 @@ class AuthLocalDataSource {
 
     // Debug: masked log to confirm tokens were saved
     try {
-      final maskedAccess = accessToken.length > 10 ? '${accessToken.substring(0, 6)}...${accessToken.substring(accessToken.length - 4)}' : accessToken;
-      final maskedRefresh = refreshToken.length > 10 ? '${refreshToken.substring(0, 6)}...${refreshToken.substring(refreshToken.length - 4)}' : refreshToken;
-      print('AuthLocalDataSource: saved accessToken=$maskedAccess refreshToken=$maskedRefresh');
+      final maskedAccess = accessToken.length > 10
+          ? '${accessToken.substring(0, 6)}...${accessToken.substring(accessToken.length - 4)}'
+          : accessToken;
+      final maskedRefresh = refreshToken.length > 10
+          ? '${refreshToken.substring(0, 6)}...${refreshToken.substring(refreshToken.length - 4)}'
+          : refreshToken;
+      print(
+        'AuthLocalDataSource: saved accessToken=$maskedAccess refreshToken=$maskedRefresh',
+      );
     } catch (_) {}
   }
 
@@ -66,7 +72,9 @@ class AuthLocalDataSource {
     final role = prefs.getString(_keyUserRole);
     final profilePicture = prefs.getString(_keyUserProfilePicture);
 
-    if (id == null || email == null || /*name == null ||*/ role == null) return null;
+    if (id == null || email == null || /*name == null ||*/ role == null) {
+      return null;
+    }
 
     String fn = '';
     String ln = '';
@@ -95,7 +103,9 @@ class AuthLocalDataSource {
     final t = prefs.getString(_keyAccessToken);
     try {
       if (t != null && t.isNotEmpty) {
-        final masked = t.length > 10 ? '${t.substring(0, 6)}...${t.substring(t.length - 4)}' : t;
+        final masked = t.length > 10
+            ? '${t.substring(0, 6)}...${t.substring(t.length - 4)}'
+            : t;
         print('AuthLocalDataSource: getAccessToken -> $masked');
       } else {
         print('AuthLocalDataSource: getAccessToken -> null');
@@ -108,7 +118,9 @@ class AuthLocalDataSource {
     final t = prefs.getString(_keyRefreshToken);
     try {
       if (t != null && t.isNotEmpty) {
-        final masked = t.length > 10 ? '${t.substring(0, 6)}...${t.substring(t.length - 4)}' : t;
+        final masked = t.length > 10
+            ? '${t.substring(0, 6)}...${t.substring(t.length - 4)}'
+            : t;
         print('AuthLocalDataSource: getRefreshToken -> $masked');
       } else {
         print('AuthLocalDataSource: getRefreshToken -> null');
@@ -151,13 +163,22 @@ class AuthLocalDataSource {
   }
 
   // Save only tokens (used when refresh endpoint returns only accessToken)
-  Future<void> saveTokens({required String accessToken, required String refreshToken}) async {
+  Future<void> saveTokens({
+    required String accessToken,
+    required String refreshToken,
+  }) async {
     await prefs.setString(_keyAccessToken, accessToken);
     await prefs.setString(_keyRefreshToken, refreshToken);
     try {
-      final maskedAccess = accessToken.length > 10 ? '${accessToken.substring(0, 6)}...${accessToken.substring(accessToken.length - 4)}' : accessToken;
-      final maskedRefresh = refreshToken.length > 10 ? '${refreshToken.substring(0, 6)}...${refreshToken.substring(refreshToken.length - 4)}' : refreshToken;
-      print('AuthLocalDataSource: saved tokens accessToken=$maskedAccess refreshToken=$maskedRefresh');
+      final maskedAccess = accessToken.length > 10
+          ? '${accessToken.substring(0, 6)}...${accessToken.substring(accessToken.length - 4)}'
+          : accessToken;
+      final maskedRefresh = refreshToken.length > 10
+          ? '${refreshToken.substring(0, 6)}...${refreshToken.substring(refreshToken.length - 4)}'
+          : refreshToken;
+      print(
+        'AuthLocalDataSource: saved tokens accessToken=$maskedAccess refreshToken=$maskedRefresh',
+      );
     } catch (_) {}
   }
 
@@ -165,7 +186,9 @@ class AuthLocalDataSource {
   Future<void> setAccessToken(String accessToken) async {
     await prefs.setString(_keyAccessToken, accessToken);
     try {
-      final masked = accessToken.length > 10 ? '${accessToken.substring(0, 6)}...${accessToken.substring(accessToken.length - 4)}' : accessToken;
+      final masked = accessToken.length > 10
+          ? '${accessToken.substring(0, 6)}...${accessToken.substring(accessToken.length - 4)}'
+          : accessToken;
       print('AuthLocalDataSource: setAccessToken -> $masked');
     } catch (_) {}
   }
@@ -174,7 +197,9 @@ class AuthLocalDataSource {
   Future<void> setRefreshToken(String refreshToken) async {
     await prefs.setString(_keyRefreshToken, refreshToken);
     try {
-      final masked = refreshToken.length > 10 ? '${refreshToken.substring(0, 6)}...${refreshToken.substring(refreshToken.length - 4)}' : refreshToken;
+      final masked = refreshToken.length > 10
+          ? '${refreshToken.substring(0, 6)}...${refreshToken.substring(refreshToken.length - 4)}'
+          : refreshToken;
       print('AuthLocalDataSource: setRefreshToken -> $masked');
     } catch (_) {}
   }

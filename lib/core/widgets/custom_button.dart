@@ -19,7 +19,7 @@ class CustomButton extends StatelessWidget {
   final bool enabled;
 
   const CustomButton({
-    Key? key,
+    super.key,
     required this.label,
     this.onPressed,
     this.isLoading = false,
@@ -32,7 +32,7 @@ class CustomButton extends StatelessWidget {
     this.leading,
     this.textStyle,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,33 +40,31 @@ class CustomButton extends StatelessWidget {
     final fg = foregroundColor ?? ColorsManager.baseWhite;
     final btnChild = isLoading
         ? SizedBox(
-      width: 20.w,
-      height: 20.w,
-      child: CircularProgressIndicator(
-        strokeWidth: 2.0,
-        valueColor: AlwaysStoppedAnimation<Color>(fg),
-      ),
-    )
+            width: 20.w,
+            height: 20.w,
+            child: CircularProgressIndicator(
+              strokeWidth: 2.0,
+              valueColor: AlwaysStoppedAnimation<Color>(fg),
+            ),
+          )
         : Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        if (leading != null) ...[
-          leading!,
-          SizedBox(width: 8.w),
-        ],
-        Flexible(
-          child: Text(
-            label,
-            overflow: TextOverflow.ellipsis,
-            style: textStyle ??
-                TextStyles.font15Grey400Weight.copyWith(
-                  color: outline ? (foregroundColor ?? bg) : fg,
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (leading != null) ...[leading!, SizedBox(width: 8.w)],
+              Flexible(
+                child: Text(
+                  label,
+                  overflow: TextOverflow.ellipsis,
+                  style:
+                      textStyle ??
+                      TextStyles.font15Grey400Weight.copyWith(
+                        color: outline ? (foregroundColor ?? bg) : fg,
+                      ),
                 ),
-          ),
-        ),
-      ],
-    );
+              ),
+            ],
+          );
 
     final shape = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(radius.r),
@@ -74,21 +72,23 @@ class CustomButton extends StatelessWidget {
 
     final ButtonStyle style = outline
         ? OutlinedButton.styleFrom(
-      backgroundColor: Colors.transparent,
-      side: BorderSide(color: backgroundColor ?? ColorsManager.primary),
-      shape: shape,
-      padding: padding ?? EdgeInsets.symmetric(horizontal: 16.w),
-      minimumSize: Size(double.infinity, height.h),
-    ).copyWith(
-      foregroundColor: MaterialStateProperty.all(foregroundColor ?? backgroundColor ?? ColorsManager.primary),
-    )
+            backgroundColor: Colors.transparent,
+            side: BorderSide(color: backgroundColor ?? ColorsManager.primary),
+            shape: shape,
+            padding: padding ?? EdgeInsets.symmetric(horizontal: 16.w),
+            minimumSize: Size(double.infinity, height.h),
+          ).copyWith(
+            foregroundColor: WidgetStateProperty.all(
+              foregroundColor ?? backgroundColor ?? ColorsManager.primary,
+            ),
+          )
         : ElevatedButton.styleFrom(
-      backgroundColor: enabled ? bg : bg.withOpacity(0.5),
-      foregroundColor: fg,
-      shape: shape,
-      padding: padding ?? EdgeInsets.symmetric(horizontal: 16.w),
-      minimumSize: Size(double.infinity, height.h),
-    );
+            backgroundColor: enabled ? bg : bg.withOpacity(0.5),
+            foregroundColor: fg,
+            shape: shape,
+            padding: padding ?? EdgeInsets.symmetric(horizontal: 16.w),
+            minimumSize: Size(double.infinity, height.h),
+          );
 
     final child = SizedBox(
       height: height.h,
@@ -100,15 +100,15 @@ class CustomButton extends StatelessWidget {
       padding: EdgeInsets.zero,
       child: outline
           ? OutlinedButton(
-        onPressed: (enabled && !isLoading) ? onPressed : null,
-        style: style,
-        child: child,
-      )
+              onPressed: (enabled && !isLoading) ? onPressed : null,
+              style: style,
+              child: child,
+            )
           : ElevatedButton(
-        onPressed: (enabled && !isLoading) ? onPressed : null,
-        style: style,
-        child: child,
-      ),
+              onPressed: (enabled && !isLoading) ? onPressed : null,
+              style: style,
+              child: child,
+            ),
     );
   }
 }

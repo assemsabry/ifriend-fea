@@ -12,7 +12,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.ifriend_app"
+    namespace = "com.ifriend.app"
     compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
@@ -27,10 +27,10 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.ifriend_app"
+        applicationId = "com.ifriend.app"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        minSdk = 25
         targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName

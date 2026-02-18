@@ -30,7 +30,7 @@ class _RefreshApiService implements RefreshApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/auth/refresh',
+            '/application/auth/refresh',
             queryParameters: queryParameters,
             data: _data,
           )
